@@ -1,18 +1,18 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.example.todoapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.todoapp"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -42,16 +42,18 @@ android {
 
 dependencies {
 
-    val room_version = "2.5.0"
+    val room_version = "2.6.1"
+    val daggerHilt_version = "2.48"
     //Room
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     //DaggerHilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:$daggerHilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$daggerHilt_version")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("androidx.activity:activity-ktx:1.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
