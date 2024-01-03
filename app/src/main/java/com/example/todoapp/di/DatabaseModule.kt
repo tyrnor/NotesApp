@@ -7,6 +7,7 @@ import com.example.todoapp.data.local.TaskDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Singleton
     @Provides
-    fun provideAppDatabase(context: Context): AppDatabase {
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,

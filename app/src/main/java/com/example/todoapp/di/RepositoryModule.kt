@@ -2,6 +2,7 @@ package com.example.todoapp.di
 
 import com.example.todoapp.data.local.TaskDao
 import com.example.todoapp.data.repository.TaskRepository
+import com.example.todoapp.domain.mappers.TaskMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +15,7 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideTaskRepository(taskDao: TaskDao): TaskRepository {
-        return TaskRepository(taskDao)
+    fun provideTaskRepository(taskDao: TaskDao, mapper: TaskMapper): TaskRepository {
+        return TaskRepository(taskDao, mapper)
     }
 }
