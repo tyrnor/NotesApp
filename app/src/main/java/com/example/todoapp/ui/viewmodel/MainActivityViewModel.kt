@@ -76,6 +76,118 @@ class MainActivityViewModel @Inject constructor(
                 description = "Description 2",
                 dueDate = null,
                 isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
+            ),
+            Task(
+                id = 2,
+                title = "Test Task 2",
+                description = "Description 2",
+                dueDate = null,
+                isCompleted = true
             )
 
         )

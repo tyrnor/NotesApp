@@ -15,7 +15,11 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val task = getItem(position)
+        holder.bind(task) {
+            task.isIconsVisible = it
+            notifyDataSetChanged()
+        }
     }
 }
 
