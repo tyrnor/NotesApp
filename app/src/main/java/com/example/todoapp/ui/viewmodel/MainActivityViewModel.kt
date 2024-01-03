@@ -36,160 +36,26 @@ class MainActivityViewModel @Inject constructor(
                 isCompleted = true
             ),
             Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
+                id = 3,
+                title = "Test Task 3",
+                description = "Description 3",
+                dueDate = null,
+                isCompleted = false
+            ),
+            Task(
+                id = 4,
+                title = "Test Task 4",
+                description = "Description 4",
                 dueDate = null,
                 isCompleted = true
             ),
             Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
+                id = 5,
+                title = "Test Task 5",
+                description = "Description 5",
                 dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
-            ),
-            Task(
-                id = 2,
-                title = "Test Task 2",
-                description = "Description 2",
-                dueDate = null,
-                isCompleted = true
+                isCompleted = false
             )
-
         )
     )
 

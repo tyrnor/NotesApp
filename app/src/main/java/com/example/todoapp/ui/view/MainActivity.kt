@@ -1,28 +1,22 @@
 package com.example.todoapp.ui.view
 
 
-import android.annotation.SuppressLint
-import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityMainBinding
+import com.example.todoapp.domain.entities.Task
 import com.example.todoapp.ui.adapter.TaskAdapter
 import com.example.todoapp.ui.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), TaskAdapter.TaskActions {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -41,12 +35,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        taskAdapter = TaskAdapter()
+        taskAdapter = TaskAdapter().apply{
+            taskActions = this@MainActivity
+        }
+
         binding.rvTasks.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = taskAdapter
         }
     }
+
 
     private fun initUIState() {
         lifecycleScope.launch {
@@ -61,6 +59,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onDeleteTask(task: Task) {
+        viewModel.deleteTask(task)
     }
 
 }

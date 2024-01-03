@@ -17,12 +17,17 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
     private lateinit var disappearAnimation: Animation
 
     @SuppressLint("ClickableViewAccessibility")
-    fun bind(task: Task, onStateChange: (Boolean) -> Unit) {
+    fun bind(task: Task, taskActions: TaskAdapter.TaskActions?, onStateChange: (Boolean) -> Unit) {
         setIconVisibility(task.isIconsVisible)
         setupAnimations(task, onStateChange)
 
+        binding.ivDelete.setOnClickListener {
+            taskActions?.onDeleteTask(task)
+        }
+
         binding.textViewTitle.text = task.title
-        binding.textViewTitle.setOnTouchListener(object : OnSwipeTouchListener(binding.root.context){
+        binding.textViewTitle.setOnTouchListener(object :
+            OnSwipeTouchListener(binding.root.context) {
 
             override fun onSwipeLeft() {
                 if (!task.isIconsVisible) {
@@ -45,31 +50,42 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
         binding.buttons.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
-    private fun setupSlideInAnimation(task: Task, onStateChange: (Boolean) -> Unit){
-        appearAnimation = createAnimation(R.anim.slide_in_left, task, onStateChange, true)
-    }
-    private fun setupSlideOutAnimation(task: Task, onStateChange: (Boolean) -> Unit){
-        disappearAnimation = createAnimation(R.anim.slide_out_left, task, onStateChange, false)
-    }
-
     private fun setupAnimations(task: Task, onStateChange: (Boolean) -> Unit) {
         setupSlideInAnimation(task, onStateChange)
         setupSlideOutAnimation(task, onStateChange)
     }
 
-    private fun createAnimation(animationResId: Int, task: Task, onStateChange: (Boolean) -> Unit, isVisible: Boolean ) : Animation{
+    private fun setupSlideInAnimation(task: Task, onStateChange: (Boolean) -> Unit) {
+        appearAnimation = createAnimation(R.anim.slide_in_left, task, onStateChange, true)
+    }
+
+    private fun setupSlideOutAnimation(task: Task, onStateChange: (Boolean) -> Unit) {
+        disappearAnimation = createAnimation(R.anim.slide_out_left, task, onStateChange, false)
+    }
+
+    private fun createAnimation(
+        animationResId: Int,
+        task: Task,
+        onStateChange: (Boolean) -> Unit,
+        isVisible: Boolean,
+    ): Animation {
         val animation = AnimationUtils.loadAnimation(binding.root.context, animationResId)
         animation.setAnimationListener(createAnimationListener(task, onStateChange, isVisible))
         return animation
     }
 
-    private fun createAnimationListener(task: Task, onStateChange: (Boolean) -> Unit, isVisible: Boolean): Animation.AnimationListener {
+    private fun createAnimationListener(
+        task: Task,
+        onStateChange: (Boolean) -> Unit,
+        isVisible: Boolean,
+    ): Animation.AnimationListener {
         return object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {}
             override fun onAnimationEnd(p0: Animation?) {
                 task.isIconsVisible = isVisible
                 onStateChange(isVisible)
             }
+
             override fun onAnimationRepeat(p0: Animation?) {}
         }
     }

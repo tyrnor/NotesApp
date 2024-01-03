@@ -9,6 +9,12 @@ import com.example.todoapp.domain.entities.Task
 
 class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
 
+    interface TaskActions {
+        fun onDeleteTask(task: Task)
+    }
+
+    var taskActions: TaskActions? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TaskViewHolder(binding)
@@ -16,7 +22,7 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task) {
+        holder.bind(task, taskActions) {
             task.isIconsVisible = it
             notifyDataSetChanged()
         }
