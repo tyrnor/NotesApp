@@ -42,8 +42,15 @@ android {
 
 dependencies {
 
+
     val room_version = "2.6.1"
     val daggerHilt_version = "2.48"
+    val navVersion = "2.7.6"
+
+    //NavComponent
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+
     //Room
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
@@ -57,6 +64,7 @@ dependencies {
 
     implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
 
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")

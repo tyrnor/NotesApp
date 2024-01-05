@@ -5,12 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentAddEditTaskBinding
+import com.example.todoapp.ui.viewmodel.AddEditTaskViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddEditTaskFragment : Fragment() {
+
+    private val viewModel: AddEditTaskViewModel by activityViewModels()
 
     private var _binding: FragmentAddEditTaskBinding? = null
     private val binding get() = _binding!!
