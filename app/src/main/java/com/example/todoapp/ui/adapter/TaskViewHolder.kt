@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ItemTaskBinding
 import com.example.todoapp.domain.entities.Task
+import com.example.todoapp.domain.entities.isIconsVisible
+import com.example.todoapp.domain.entities.isIconsVisible.*
 import com.example.todoapp.ui.core.listeners.OnSwipeTouchListener
 
 class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -15,80 +17,103 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
 
     private lateinit var appearAnimation: Animation
     private lateinit var disappearAnimation: Animation
+    private lateinit var disappearAnimation2: Animation
 
     @SuppressLint("ClickableViewAccessibility")
-    fun bind(task: Task, taskActions: TaskAdapter.TaskActions?, onStateChange: (Boolean) -> Unit) {
-        setIconVisibility(task.isIconsVisible)
+    fun bind(
+        task: Task,
+        taskActions: TaskAdapter.TaskActions?,
+        isExpanded: Boolean,
+        onStateChange: (isIconsVisible, Int) -> Unit,
+    ) {
         setupAnimations(task, onStateChange)
+
+        when(task.isIconsVisible){
+            Hidden -> binding.buttons.visibility = View.GONE
+            Visible -> binding.buttons.visibility = View.VISIBLE
+            PrevIcon -> binding.buttons.apply {
+                startAnimation(disappearAnimation2)
+                visibility = View.GONE
+            }
+        }
+
 
         binding.ivDelete.setOnClickListener {
             taskActions?.onDeleteTask(task)
+            onStateChange(Hidden, -1)
         }
 
         binding.textViewTitle.text = task.title
+        binding.tvIsVisible.text = isExpanded.toString()
+        binding.tvIsVisible2.text = task.isIconsVisible.toString()
         binding.textViewTitle.setOnTouchListener(object :
             OnSwipeTouchListener(binding.root.context) {
 
             override fun onSwipeLeft() {
-                if (!task.isIconsVisible) {
-                    binding.buttons.startAnimation(appearAnimation)
-                    binding.buttons.visibility = View.VISIBLE
+                if (!isExpanded) {
+                    binding.buttons.apply {
+                        startAnimation(appearAnimation)
+                        visibility = View.VISIBLE
+                    }
                 }
             }
-
             override fun onSwipeRight() {
-                if (task.isIconsVisible) {
-                    binding.buttons.startAnimation(disappearAnimation)
-                    binding.buttons.visibility = View.GONE
+                if (isExpanded) {
+                    binding.buttons.apply {
+                        startAnimation(disappearAnimation)
+                        visibility = View.GONE
+                    }
+                }
+            }
+            override fun onClick(v: View) {
+                if (isExpanded) {
+                    binding.buttons.apply {
+                        startAnimation(disappearAnimation)
+                        visibility = View.GONE
+                    }
                 }
             }
         })
 
     }
 
-    private fun setIconVisibility(isVisible: Boolean) {
-        binding.buttons.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
-
-    private fun setupAnimations(task: Task, onStateChange: (Boolean) -> Unit) {
-        setupSlideInAnimation(task, onStateChange)
-        setupSlideOutAnimation(task, onStateChange)
-    }
-
-    private fun setupSlideInAnimation(task: Task, onStateChange: (Boolean) -> Unit) {
-        appearAnimation = createAnimation(R.anim.slide_in_left, task, onStateChange, true)
-    }
-
-    private fun setupSlideOutAnimation(task: Task, onStateChange: (Boolean) -> Unit) {
-        disappearAnimation = createAnimation(R.anim.slide_out_left, task, onStateChange, false)
-    }
-
-    private fun createAnimation(
-        animationResId: Int,
+    private fun setupAnimations(
         task: Task,
-        onStateChange: (Boolean) -> Unit,
-        isVisible: Boolean,
-    ): Animation {
-        val animation = AnimationUtils.loadAnimation(binding.root.context, animationResId)
-        animation.setAnimationListener(createAnimationListener(task, onStateChange, isVisible))
-        return animation
-    }
-
-    private fun createAnimationListener(
-        task: Task,
-        onStateChange: (Boolean) -> Unit,
-        isVisible: Boolean,
-    ): Animation.AnimationListener {
-        return object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {
-                task.isIconsVisible = isVisible
-                onStateChange(isVisible)
+        onStateChange: (isIconsVisible, Int) -> Unit
+    ) {
+        appearAnimation =
+            AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_in_left).apply {
+                setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation) {}
+                    override fun onAnimationEnd(animation: Animation) {
+                        onStateChange(Visible, absoluteAdapterPosition)
+                    }
+                    override fun onAnimationRepeat(animation: Animation) {}
+                })
             }
 
-            override fun onAnimationRepeat(p0: Animation?) {}
-        }
+        disappearAnimation =
+            AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left).apply {
+                setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation) {}
+                    override fun onAnimationEnd(animation: Animation) {
+                        onStateChange(Hidden, -1)
+                    }
+                    override fun onAnimationRepeat(animation: Animation) {}
+                })
+            }
+        disappearAnimation2 =
+            AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left).apply {
+                setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation) {task.isIconsVisible = Hidden}
+                    override fun onAnimationEnd(animation: Animation) {
+
+                    }
+                    override fun onAnimationRepeat(animation: Animation) {}
+                })
+            }
     }
+
 }
 
 

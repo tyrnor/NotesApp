@@ -18,11 +18,23 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> v.parent.requestDisallowInterceptTouchEvent(true)
-            MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+//        when (event.action) {
+//            MotionEvent.ACTION_DOWN -> v.parent.requestDisallowInterceptTouchEvent(true)
+//            MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
+//        }
+       // return gestureDetector.onTouchEvent(event)
+        gestureDetector.onTouchEvent(event)
+        return when (event.action) {
+            MotionEvent.ACTION_UP -> {
+                onClick(v) // Call onClick when the user lifts their finger
+                true
+            }
+            else -> gestureDetector.onTouchEvent(event)
         }
-        return gestureDetector.onTouchEvent(event)
+    }
+
+    open fun onClick(v: View) {
+        // Implement click action
     }
 
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
