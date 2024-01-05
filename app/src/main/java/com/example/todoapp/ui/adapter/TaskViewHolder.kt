@@ -44,8 +44,6 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
         }
 
         binding.textViewTitle.text = task.title
-        binding.tvIsVisible.text = isExpanded.toString()
-        binding.tvIsVisible2.text = task.isIconsVisible.toString()
         binding.textViewTitle.setOnTouchListener(object :
             OnSwipeTouchListener(binding.root.context) {
 
@@ -106,9 +104,7 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
             AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left).apply {
                 setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation) {task.isIconsVisible = Hidden}
-                    override fun onAnimationEnd(animation: Animation) {
-
-                    }
+                    override fun onAnimationEnd(animation: Animation) {}
                     override fun onAnimationRepeat(animation: Animation) {}
                 })
             }

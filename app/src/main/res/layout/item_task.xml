@@ -15,37 +15,22 @@
         android:layout_height="match_parent"
         android:layout_weight="0.7"
         tools:text="Task Title"/>
-    <TextView
-        android:id="@+id/tvIsVisible"
-        android:padding="16dp"
-        android:textSize="12sp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        tools:text="true"/>
-    <TextView
-        android:id="@+id/tvIsVisible2"
-        android:padding="16dp"
-        android:textSize="12sp"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2"
-        tools:text="true"/>
+
     <LinearLayout
         android:id="@+id/buttons"
         android:layout_weight="0.3"
         android:layout_width="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/ivEdit"
+            android:id="@+id/ivArchive"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:visibility="visible"
             android:background="@color/blue"
-            android:src="@drawable/ic_edit"
+            android:src="@drawable/ic_archive"
             />
         <ImageView
             android:id="@+id/ivDelete"
