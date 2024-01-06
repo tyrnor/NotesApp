@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/taskListFragment">
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.example.todoapp.ui.view.MainActivity"
-        android:label="activity_main"
-        tools:layout="@layout/activity_main" />
     <fragment
         android:id="@+id/addEditTaskFragment"
         android:name="com.example.todoapp.ui.view.AddEditTaskFragment"
         android:label="fragment_add_edit_task"
         tools:layout="@layout/fragment_add_edit_task" />
+    <fragment
+        android:id="@+id/taskListFragment"
+        android:name="com.example.todoapp.ui.view.TaskListFragment"
+        android:label="fragment_task_list"
+        tools:layout="@layout/fragment_task_list" >
+        <action
+            android:id="@+id/action_taskListFragment_to_addEditTaskFragment"
+            app:destination="@id/addEditTaskFragment" />
+    </fragment>
 </navigation>

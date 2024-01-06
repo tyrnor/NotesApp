@@ -2,26 +2,19 @@ package com.example.todoapp.ui.view
 
 
 import android.os.Bundle
-import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityMainBinding
-import com.example.todoapp.domain.entities.Task
-import com.example.todoapp.ui.adapter.TaskAdapter
-import com.example.todoapp.ui.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), TaskAdapter.TaskActions {
-
-    private val viewModel: MainActivityViewModel by viewModels()
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,38 +23,17 @@ class MainActivity : AppCompatActivity(), TaskAdapter.TaskActions {
     }
 
     private fun initUI() {
-        initRecyclerView()
-        initUIState()
+        initNavigation()
     }
 
-    private fun initRecyclerView() {
-        taskAdapter = TaskAdapter().apply{
-            taskActions = this@MainActivity
+    private fun initNavigation() {
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHost.navController
+        binding.fabAddTask.setOnClickListener {
+            navController.navigate(R.id.action_taskListFragment_to_addEditTaskFragment)
         }
 
-        binding.rvTasks.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = taskAdapter
-        }
-    }
-
-
-    private fun initUIState() {
-        lifecycleScope.launch {
-            viewModel.testTasks.collect { tasks ->
-                if (tasks.isEmpty()) {
-                    binding.tvEmptyList.visibility = View.VISIBLE
-                    binding.rvTasks.visibility = View.GONE
-                } else {
-                    binding.tvEmptyList.visibility = View.GONE
-                    binding.rvTasks.visibility = View.VISIBLE
-                    taskAdapter.submitList(tasks)
-                }
-            }
-        }
-    }
-    override fun onDeleteTask(task: Task) {
-        viewModel.deleteTask(task)
     }
 
 }
