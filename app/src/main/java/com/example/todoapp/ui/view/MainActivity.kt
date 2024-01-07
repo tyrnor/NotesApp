@@ -2,6 +2,7 @@ package com.example.todoapp.ui.view
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -27,10 +28,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigation() {
+        val fabAddTask = binding.fabAddTask
         val navHost =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController
-        binding.fabAddTask.setOnClickListener {
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            if (destination.id == R.id.addEditTaskFragment){
+                fabAddTask.visibility = View.GONE
+            } else {
+                fabAddTask.visibility = View.VISIBLE
+            }
+
+        }
+        fabAddTask.setOnClickListener {
             navController.navigate(R.id.action_taskListFragment_to_addEditTaskFragment)
         }
 

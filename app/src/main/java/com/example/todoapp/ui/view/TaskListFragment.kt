@@ -72,4 +72,6 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
         viewModel.deleteTask(task)
     }
 
+
+
 }
