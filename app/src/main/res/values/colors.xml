@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="blue">#00C4FF</color>
+
+    <color name="accent">#fe2da1</color>
 </resources>

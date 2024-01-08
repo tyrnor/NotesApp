@@ -21,7 +21,6 @@ class AddEditTaskFragment : Fragment() {
     private var _binding: FragmentAddEditTaskBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var navController: NavController
 
 
     override fun onCreateView(
@@ -34,6 +33,18 @@ class AddEditTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initUI()
+    }
+
+    private fun initUI() {
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
 }

@@ -17,6 +17,10 @@
         tools:layout="@layout/fragment_task_list" >
         <action
             android:id="@+id/action_taskListFragment_to_addEditTaskFragment"
-            app:destination="@id/addEditTaskFragment" />
+            app:destination="@id/addEditTaskFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right" />
     </fragment>
 </navigation>
