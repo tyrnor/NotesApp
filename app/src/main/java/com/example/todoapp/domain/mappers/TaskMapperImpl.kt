@@ -9,8 +9,7 @@ class TaskMapperImpl : TaskMapper {
             id = taskEntity.id,
             title = taskEntity.title,
             description = taskEntity.description,
-            dueDate = taskEntity.dueDate,
-            isCompleted = taskEntity.isCompleted
+            creationDate = taskEntity.creationDate,
         )
     }
 
@@ -19,8 +18,7 @@ class TaskMapperImpl : TaskMapper {
             id = task.id,
             title = task.title,
             description = task.description,
-            dueDate = task.dueDate,
-            isCompleted = task.isCompleted
+            creationDate = task.creationDate,
         )
     }
 }

@@ -9,7 +9,5 @@ data class TaskEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
     val description: String,
-    val dueDate: Date? = null,
-    val isCompleted: Boolean = false,
-    val priority: Int = 0,
+    val creationDate: Date? = null,
 )

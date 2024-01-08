@@ -9,7 +9,15 @@
         android:id="@+id/addEditTaskFragment"
         android:name="com.example.todoapp.ui.view.AddEditTaskFragment"
         android:label="fragment_add_edit_task"
-        tools:layout="@layout/fragment_add_edit_task" />
+        tools:layout="@layout/fragment_add_edit_task" >
+        <action
+            android:id="@+id/action_addEditTaskFragment_to_taskListFragment"
+            app:destination="@id/taskListFragment"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_right"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_left" />
+    </fragment>
     <fragment
         android:id="@+id/taskListFragment"
         android:name="com.example.todoapp.ui.view.TaskListFragment"

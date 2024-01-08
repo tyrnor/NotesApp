@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.databinding.ItemTaskBinding
+import com.example.todoapp.domain.entities.IsIconsVisible
 import com.example.todoapp.domain.entities.Task
-import com.example.todoapp.domain.entities.isIconsVisible
-import kotlin.math.exp
 
 class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
 
@@ -17,8 +16,14 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
         fun onDeleteTask(task: Task)
     }
 
+    interface UpdateIconVisibility{
+        fun updateIconVisibility (task: Task, isIconsVisible: IsIconsVisible)
+    }
+
     var taskActions: TaskActions? = null
+    var updateIconVisibility: UpdateIconVisibility? = null
     private var expandedPosition = RecyclerView.NO_POSITION
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TaskViewHolder(binding)
@@ -26,17 +31,14 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, taskActions, position == expandedPosition)  { state, newPosition ->
-            task.isIconsVisible = state
-            Log.i("ADAPTER", "onBindViewHolder: $newPosition and $expandedPosition")
+        holder.bind(task, taskActions, updateIconVisibility, position == expandedPosition)  { newPosition ->
+            Log.i("TAG", "onBindViewHolder: New position $newPosition and expandedPosition $expandedPosition")
             if (newPosition != expandedPosition){
                 val prevPosition = expandedPosition
-                if (prevPosition != -1 && task.isIconsVisible == isIconsVisible.Visible){
-                    getItem(prevPosition).isIconsVisible = isIconsVisible.PrevIcon
+                if (prevPosition != -1 && task.isIconsVisible == IsIconsVisible.Visible){
+                    updateIconVisibility?.updateIconVisibility(getItem(prevPosition), isIconsVisible = IsIconsVisible.PrevIcon)
                 }
                 expandedPosition = newPosition
-                notifyItemChanged(prevPosition)
-                notifyItemChanged(expandedPosition)
             }
             notifyDataSetChanged()
         }

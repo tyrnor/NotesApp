@@ -1,33 +1,33 @@
 package com.example.todoapp.ui.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentTaskListBinding
+import com.example.todoapp.domain.entities.IsIconsVisible
 import com.example.todoapp.domain.entities.Task
 import com.example.todoapp.ui.adapter.TaskAdapter
 import com.example.todoapp.ui.viewmodel.TaskListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
-class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
+@AndroidEntryPoint
+class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.UpdateIconVisibility {
 
     private val viewModel: TaskListViewModel by activityViewModels()
-
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var taskAdapter: TaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentTaskListBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -35,6 +35,7 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+
     }
 
     private fun initUI() {
@@ -44,7 +45,9 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
 
     private fun initUIState() {
         lifecycleScope.launch {
-            viewModel.testTasks.collect { tasks ->
+            viewModel.tasks.collect { tasks ->
+                Log.i("TAG", "initUIState: $tasks")
+                viewModel.setAllTaskHidden()
                 if (tasks.isEmpty()) {
                     binding.tvEmptyList.visibility = View.VISIBLE
                     binding.rvTasks.visibility = View.GONE
@@ -58,8 +61,9 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
     }
 
     private fun initRecyclerView() {
-        taskAdapter = TaskAdapter().apply{
+        taskAdapter = TaskAdapter().apply {
             taskActions = this@TaskListFragment
+            updateIconVisibility = this@TaskListFragment
         }
 
         binding.rvTasks.apply {
@@ -72,6 +76,9 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions {
         viewModel.deleteTask(task)
     }
 
+    override fun updateIconVisibility(task: Task, isIconsVisible: IsIconsVisible) {
+        viewModel.updateTaskIsIconsVisible(task, isIconsVisible )
+    }
 
 
 }

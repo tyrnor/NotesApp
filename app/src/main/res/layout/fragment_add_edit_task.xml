@@ -24,13 +24,27 @@
             android:src="@drawable/ic_back"
             app:tint="@color/black"
             android:contentDescription="@string/ivBack_content_description" />
+        <TextView
+            android:id="@+id/tvConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="24dp"
+            android:text="@string/confirm_btn"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:layout_gravity="end"
+            android:enabled="false"
+            />
     </FrameLayout>
 
     <EditText
         android:id="@+id/etTitle"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="32dp"
+        android:textSize="28sp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +65,7 @@
         android:inputType="textVisiblePassword|textMultiLine|textNoSuggestions"
         android:hint="@string/description_hint"
         android:autofillHints="description task"
-        />  
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

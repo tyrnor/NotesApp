@@ -1,6 +1,7 @@
 package com.example.todoapp.ui.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -8,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ItemTaskBinding
 import com.example.todoapp.domain.entities.Task
-import com.example.todoapp.domain.entities.isIconsVisible
-import com.example.todoapp.domain.entities.isIconsVisible.*
+import com.example.todoapp.domain.entities.IsIconsVisible.*
 import com.example.todoapp.ui.core.listeners.OnSwipeTouchListener
 
 class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -19,28 +19,38 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
     private lateinit var disappearAnimation: Animation
     private lateinit var disappearAnimation2: Animation
 
+    init {
+        binding.buttons.visibility = View.GONE
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     fun bind(
         task: Task,
         taskActions: TaskAdapter.TaskActions?,
+        updateIconVisibility: TaskAdapter.UpdateIconVisibility?,
         isExpanded: Boolean,
-        onStateChange: (isIconsVisible, Int) -> Unit,
+        onStateChange: (Int) -> Unit,
     ) {
-        setupAnimations(task, onStateChange)
+        Log.i("Test", "bind: ${task.title} ${task.isIconsVisible}")
+
+        setupAnimations(task, onStateChange, updateIconVisibility)
+
 
         when(task.isIconsVisible){
             Hidden -> binding.buttons.visibility = View.GONE
             Visible -> binding.buttons.visibility = View.VISIBLE
             PrevIcon -> binding.buttons.apply {
+                Log.i("TEST", "bind: Start PrevIcon anim ${task.title}")
                 startAnimation(disappearAnimation2)
                 visibility = View.GONE
+                updateIconVisibility?.updateIconVisibility(task, Hidden)
             }
         }
 
 
         binding.ivDelete.setOnClickListener {
             taskActions?.onDeleteTask(task)
-            onStateChange(Hidden, -1)
+            onStateChange(-1)
         }
 
         binding.textViewTitle.text = task.title
@@ -50,8 +60,9 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
             override fun onSwipeLeft() {
                 if (!isExpanded) {
                     binding.buttons.apply {
-                        startAnimation(appearAnimation)
                         visibility = View.VISIBLE
+                        startAnimation(appearAnimation)
+                        updateIconVisibility?.updateIconVisibility(task, Visible)
                     }
                 }
             }
@@ -59,6 +70,7 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                 if (isExpanded) {
                     binding.buttons.apply {
                         startAnimation(disappearAnimation)
+                        updateIconVisibility?.updateIconVisibility(task, Hidden)
                         visibility = View.GONE
                     }
                 }
@@ -67,6 +79,7 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                 if (isExpanded) {
                     binding.buttons.apply {
                         startAnimation(disappearAnimation)
+                        updateIconVisibility?.updateIconVisibility(task, Hidden)
                         visibility = View.GONE
                     }
                 }
@@ -77,14 +90,16 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
 
     private fun setupAnimations(
         task: Task,
-        onStateChange: (isIconsVisible, Int) -> Unit
+        onStateChange: (Int) -> Unit,
+        updateIconVisibility: TaskAdapter.UpdateIconVisibility?
     ) {
         appearAnimation =
             AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_in_left).apply {
                 setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation) {}
                     override fun onAnimationEnd(animation: Animation) {
-                        onStateChange(Visible, absoluteAdapterPosition)
+                        onStateChange(absoluteAdapterPosition)
+                        updateIconVisibility?.updateIconVisibility(task, Visible)
                     }
                     override fun onAnimationRepeat(animation: Animation) {}
                 })
@@ -95,7 +110,8 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                 setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation) {}
                     override fun onAnimationEnd(animation: Animation) {
-                        onStateChange(Hidden, -1)
+                        onStateChange(-1)
+                        updateIconVisibility?.updateIconVisibility(task, Hidden)
                     }
                     override fun onAnimationRepeat(animation: Animation) {}
                 })
@@ -103,8 +119,11 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
         disappearAnimation2 =
             AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left).apply {
                 setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation) {task.isIconsVisible = Hidden}
-                    override fun onAnimationEnd(animation: Animation) {}
+                    override fun onAnimationStart(animation: Animation) {
+                    }
+                    override fun onAnimationEnd(animation: Animation) {
+
+                    }
                     override fun onAnimationRepeat(animation: Animation) {}
                 })
             }
