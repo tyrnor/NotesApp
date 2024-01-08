@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,12 +15,17 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
         fun onDeleteTask(task: Task)
     }
 
-    interface UpdateIconVisibility{
-        fun updateIconVisibility (task: Task, isIconsVisible: IsIconsVisible)
+    interface UpdateIconVisibility {
+        fun updateIconVisibility(task: Task, isIconsVisible: IsIconsVisible)
+    }
+
+    interface TaskItemClickListener {
+        fun onItemClick(task: Task)
     }
 
     var taskActions: TaskActions? = null
     var updateIconVisibility: UpdateIconVisibility? = null
+    var taskItemClickListener: TaskItemClickListener? = null
     private var expandedPosition = RecyclerView.NO_POSITION
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -31,12 +35,20 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task = getItem(position)
-        holder.bind(task, taskActions, updateIconVisibility, position == expandedPosition)  { newPosition ->
-            Log.i("TAG", "onBindViewHolder: New position $newPosition and expandedPosition $expandedPosition")
-            if (newPosition != expandedPosition){
+        holder.bind(
+            task,
+            taskActions,
+            updateIconVisibility,
+            taskItemClickListener,
+            position == expandedPosition
+        ) { newPosition ->
+            if (newPosition != expandedPosition) {
                 val prevPosition = expandedPosition
-                if (prevPosition != -1 && task.isIconsVisible == IsIconsVisible.Visible){
-                    updateIconVisibility?.updateIconVisibility(getItem(prevPosition), isIconsVisible = IsIconsVisible.PrevIcon)
+                if (prevPosition != -1 && task.isIconsVisible == IsIconsVisible.Visible) {
+                    updateIconVisibility?.updateIconVisibility(
+                        getItem(prevPosition),
+                        isIconsVisible = IsIconsVisible.PrevIcon
+                    )
                 }
                 expandedPosition = newPosition
             }

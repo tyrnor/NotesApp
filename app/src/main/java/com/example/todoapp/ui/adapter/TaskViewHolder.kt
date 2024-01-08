@@ -28,19 +28,15 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
         task: Task,
         taskActions: TaskAdapter.TaskActions?,
         updateIconVisibility: TaskAdapter.UpdateIconVisibility?,
+        taskItemClickListener: TaskAdapter.TaskItemClickListener?,
         isExpanded: Boolean,
         onStateChange: (Int) -> Unit,
     ) {
-        Log.i("Test", "bind: ${task.title} ${task.isIconsVisible}")
-
         setupAnimations(task, onStateChange, updateIconVisibility)
-
-
         when(task.isIconsVisible){
             Hidden -> binding.buttons.visibility = View.GONE
             Visible -> binding.buttons.visibility = View.VISIBLE
             PrevIcon -> binding.buttons.apply {
-                Log.i("TEST", "bind: Start PrevIcon anim ${task.title}")
                 startAnimation(disappearAnimation2)
                 visibility = View.GONE
                 updateIconVisibility?.updateIconVisibility(task, Hidden)
@@ -76,6 +72,10 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                 }
             }
             override fun onClick(v: View) {
+                if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
+                    Log.i("TEST", "onClick: TEST")
+                    taskItemClickListener?.onItemClick(task)
+                }
                 if (isExpanded) {
                     binding.buttons.apply {
                         startAnimation(disappearAnimation)
@@ -116,17 +116,8 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                     override fun onAnimationRepeat(animation: Animation) {}
                 })
             }
-        disappearAnimation2 =
-            AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left).apply {
-                setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation) {
-                    }
-                    override fun onAnimationEnd(animation: Animation) {
+        disappearAnimation2 = AnimationUtils.loadAnimation(binding.root.context, R.anim.slide_out_left)
 
-                    }
-                    override fun onAnimationRepeat(animation: Animation) {}
-                })
-            }
     }
 
 }

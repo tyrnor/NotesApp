@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todoapp.R
 import com.example.todoapp.databinding.FragmentTaskListBinding
 import com.example.todoapp.domain.entities.IsIconsVisible
 import com.example.todoapp.domain.entities.Task
@@ -17,7 +21,8 @@ import com.example.todoapp.ui.viewmodel.TaskListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 @AndroidEntryPoint
-class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.UpdateIconVisibility {
+class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.UpdateIconVisibility, TaskAdapter.TaskItemClickListener {
+
 
     private val viewModel: TaskListViewModel by activityViewModels()
     private var _binding: FragmentTaskListBinding? = null
@@ -43,10 +48,11 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
         initUIState()
     }
 
+
+
     private fun initUIState() {
         lifecycleScope.launch {
             viewModel.tasks.collect { tasks ->
-                Log.i("TAG", "initUIState: $tasks")
                 viewModel.setAllTaskHidden()
                 if (tasks.isEmpty()) {
                     binding.tvEmptyList.visibility = View.VISIBLE
@@ -64,6 +70,7 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
         taskAdapter = TaskAdapter().apply {
             taskActions = this@TaskListFragment
             updateIconVisibility = this@TaskListFragment
+            taskItemClickListener = this@TaskListFragment
         }
 
         binding.rvTasks.apply {
@@ -73,11 +80,17 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
     }
 
     override fun onDeleteTask(task: Task) {
+        Log.i("TAG", "onDeleteTask: TEST")
         viewModel.deleteTask(task)
     }
 
     override fun updateIconVisibility(task: Task, isIconsVisible: IsIconsVisible) {
         viewModel.updateTaskIsIconsVisible(task, isIconsVisible )
+    }
+
+    override fun onItemClick(task: Task) {
+        Log.i("TAG", "onItemClick: TEST")
+        findNavController().navigate(TaskListFragmentDirections.actionTaskListFragmentToEditTaskFragment(task.id))
     }
 
 

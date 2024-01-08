@@ -6,12 +6,12 @@
     app:startDestination="@id/taskListFragment">
 
     <fragment
-        android:id="@+id/addEditTaskFragment"
-        android:name="com.example.todoapp.ui.view.AddEditTaskFragment"
+        android:id="@+id/addTaskFragment"
+        android:name="com.example.todoapp.ui.view.AddTaskFragment"
         android:label="fragment_add_edit_task"
-        tools:layout="@layout/fragment_add_edit_task" >
+        tools:layout="@layout/fragment_add_task" >
         <action
-            android:id="@+id/action_addEditTaskFragment_to_taskListFragment"
+            android:id="@+id/action_addTaskFragment_to_taskListFragment"
             app:destination="@id/taskListFragment"
             app:enterAnim="@anim/anim_slide_in_right"
             app:exitAnim="@anim/anim_slide_out_right"
@@ -24,11 +24,29 @@
         android:label="fragment_task_list"
         tools:layout="@layout/fragment_task_list" >
         <action
-            android:id="@+id/action_taskListFragment_to_addEditTaskFragment"
-            app:destination="@id/addEditTaskFragment"
+            android:id="@+id/action_taskListFragment_to_addTaskFragment"
+            app:destination="@id/addTaskFragment"
             app:enterAnim="@anim/anim_slide_in_left"
             app:exitAnim="@anim/anim_slide_out_left"
             app:popEnterAnim="@anim/anim_slide_in_right"
-            app:popExitAnim="@anim/anim_slide_out_right" />
+            app:popExitAnim="@anim/anim_slide_out_right"
+            />
+        <action
+            android:id="@+id/action_taskListFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment"
+            app:enterAnim="@anim/anim_slide_in_left"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_right"
+            app:popExitAnim="@anim/anim_slide_out_right"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.example.todoapp.ui.view.EditTaskFragment"
+        android:label="fragment_edit_task"
+        tools:layout="@layout/fragment_edit_task">
+        <argument
+            android:name="idTask"
+            app:argType="long"/>
     </fragment>
 </navigation>
