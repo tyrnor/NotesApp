@@ -5,13 +5,22 @@ import com.example.todoapp.domain.entities.IsIconsVisible
 import com.example.todoapp.domain.entities.Task
 
 interface TaskMapper {
-
-    fun fromEntityToDomain(taskEntity: TaskEntity): Task {
+    fun fromEntityToDomain(taskEntity: TaskEntity?): Task {
+        if (taskEntity != null){
+            return Task(
+                id = taskEntity.id,
+                title = taskEntity.title,
+                description = taskEntity.description,
+                creationDate = taskEntity.creationDate,
+                isIconsVisible = IsIconsVisible.Hidden
+            )
+        }
         return Task(
-            id = taskEntity.id,
-            title = taskEntity.title,
-            description = taskEntity.description,
-            creationDate = taskEntity.creationDate,
+            id = 0L,
+            title = "",
+            description = "",
+            creationDate = null,
+            isIconsVisible = IsIconsVisible.Hidden
         )
     }
 

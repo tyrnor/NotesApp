@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.abs
+import kotlin.math.sqrt
+
 open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
 
     companion object {
@@ -11,36 +14,22 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
         private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
 
-    private val gestureDetector: GestureDetector
-
-    init {
-        gestureDetector = GestureDetector(context, GestureListener())
-    }
+    private var gestureDetector: GestureDetector = GestureDetector(context, GestureListener())
+    private var isSwiped = false
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-//        when (event.action) {
-//            MotionEvent.ACTION_DOWN -> v.parent.requestDisallowInterceptTouchEvent(true)
-//            MotionEvent.ACTION_UP -> v.parent.requestDisallowInterceptTouchEvent(false)
-//        }
-       // return gestureDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
-        return when (event.action) {
-            MotionEvent.ACTION_UP -> {
-                onClick(v) // Call onClick when the user lifts their finger
-                true
-            }
-            else -> gestureDetector.onTouchEvent(event)
+        if (event.action == MotionEvent.ACTION_UP) {
+            isSwiped = false
         }
+        return isSwiped
     }
 
-    open fun onClick(v: View) {
-        // Implement click action
-    }
 
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
-
         override fun onDown(e: MotionEvent): Boolean {
+            isSwiped = false
             return true
         }
 
@@ -51,49 +40,39 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
             velocityY: Float
         ): Boolean {
             if (e1 == null) return false
-
             var result = false
             try {
                 val diffY = e2.y - e1.y
                 val diffX = e2.x - e1.x
-                val distance = Math.sqrt((diffX * diffX + diffY * diffY).toDouble())
-                val angle = Math.toDegrees(Math.atan2(diffY.toDouble(), diffX.toDouble()))
-
-                if (distance > SWIPE_THRESHOLD) {
-                    if (Math.abs(angle) < 45 || Math.abs(angle) > 135) {
-                        // Horizontal swipe
-                        if (diffX > 0) {
-                            onSwipeRight()
-                        } else {
-                            onSwipeLeft()
-                        }
-                        result = true
-                    } else if (Math.abs(angle) >= 45 && Math.abs(angle) <= 135) {
-                        // Vertical swipe
-                        if (diffY > 0) {
-                            onSwipeBottom()
-                        } else {
-                            onSwipeTop()
-                        }
-                        result = true
+                if (sqrt((diffX * diffX + diffY * diffY).toDouble()) > SWIPE_THRESHOLD) {
+                    if (abs(diffX) > abs(diffY)) {
+                        if (diffX > 0) onSwipeRight() else onSwipeLeft()
+                    } else {
+                        if (diffY > 0) onSwipeBottom() else onSwipeTop()
                     }
+                    isSwiped = true
+                    result = true
                 }
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
-
             return result
         }
-
-
-
     }
 
-    open fun onSwipeRight() {}
+    open fun onSwipeRight() {
+        // Override this method in your listener to handle right swipe
+    }
 
-    open fun onSwipeLeft() {}
+    open fun onSwipeLeft() {
+        // Override this method in your listener to handle left swipe
+    }
 
-    open fun onSwipeTop() {}
+    open fun onSwipeTop() {
+        // Override this method in your listener to handle top swipe
+    }
 
-    open fun onSwipeBottom() {}
+    open fun onSwipeBottom() {
+        // Override this method in your listener to handle bottom swipe
+    }
 }

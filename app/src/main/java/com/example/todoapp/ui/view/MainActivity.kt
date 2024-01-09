@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHost.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.addTaskFragment) {
+            if (destination.id == R.id.addTaskFragment || destination.id == R.id.editTaskFragment) {
                 fabAddTask.visibility = View.GONE
             } else {
                 fabAddTask.visibility = View.VISIBLE

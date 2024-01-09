@@ -40,7 +40,7 @@ class TaskAdapter : ListAdapter<Task, TaskViewHolder>(TaskDiffCallback()) {
             taskActions,
             updateIconVisibility,
             taskItemClickListener,
-            position == expandedPosition
+            position == expandedPosition,
         ) { newPosition ->
             if (newPosition != expandedPosition) {
                 val prevPosition = expandedPosition

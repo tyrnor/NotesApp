@@ -41,16 +41,19 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                 visibility = View.GONE
                 updateIconVisibility?.updateIconVisibility(task, Hidden)
             }
-        }
 
+            else -> {
+                binding.buttons.visibility = View.GONE
+            }
+        }
+        binding.textViewTitle.text = task.title
+        binding.textViewDescription.text = task.description
 
         binding.ivDelete.setOnClickListener {
             taskActions?.onDeleteTask(task)
             onStateChange(-1)
         }
-
-        binding.textViewTitle.text = task.title
-        binding.textViewTitle.setOnTouchListener(object :
+        binding.texts.setOnTouchListener(object :
             OnSwipeTouchListener(binding.root.context) {
 
             override fun onSwipeLeft() {
@@ -71,8 +74,22 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                     }
                 }
             }
-            override fun onClick(v: View) {
-                if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
+//            override fun onClick(v: View) {
+//                if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
+//                    Log.i("TEST", "onClick: TEST")
+//                    taskItemClickListener?.onItemClick(task)
+//                }
+//                if (isExpanded) {
+//                    binding.buttons.apply {
+//                        startAnimation(disappearAnimation)
+//                        updateIconVisibility?.updateIconVisibility(task, Hidden)
+//                        visibility = View.GONE
+//                    }
+//                }
+//            }
+        })
+        binding.texts.setOnClickListener {
+            if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
                     Log.i("TEST", "onClick: TEST")
                     taskItemClickListener?.onItemClick(task)
                 }
@@ -83,11 +100,9 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                         visibility = View.GONE
                     }
                 }
-            }
-        })
+        }
 
     }
-
     private fun setupAnimations(
         task: Task,
         onStateChange: (Int) -> Unit,

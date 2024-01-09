@@ -7,4 +7,5 @@
     <string name="ivBack_content_description">back press icon</string>
     <string name="description_hint">Description</string>
     <string name="confirm_btn">OK</string>
+    <string name="notes">Notes</string>
 </resources>

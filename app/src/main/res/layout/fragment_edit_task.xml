@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary"
     tools:context=".ui.view.EditTaskFragment">
 
 
@@ -22,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_back"
-            app:tint="@color/black"
+            app:tint="@color/secondary"
             android:contentDescription="@string/ivBack_content_description" />
         <TextView
             android:id="@+id/tvConfirm"
@@ -34,6 +35,7 @@
             android:textStyle="bold"
             android:textSize="22sp"
             android:gravity="center"
+            android:textColor="@color/confirm_btn_color"
             android:layout_gravity="end"
             android:enabled="false"
             />
@@ -51,6 +53,8 @@
         android:backgroundTint="@android:color/transparent"
         android:inputType="textVisiblePassword|textNoSuggestions"
         android:hint="@string/title_hint"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
         android:autofillHints="title task"
         />
     <EditText
@@ -64,6 +68,8 @@
         android:backgroundTint="@android:color/transparent"
         android:inputType="textVisiblePassword|textMultiLine|textNoSuggestions"
         android:hint="@string/description_hint"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray"
         android:autofillHints="description task"
         />
 

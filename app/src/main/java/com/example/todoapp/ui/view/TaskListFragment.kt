@@ -1,10 +1,14 @@
 package com.example.todoapp.ui.view
 
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -44,10 +48,20 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
     }
 
     private fun initUI() {
+        //initVisualChanges()
         initRecyclerView()
         initUIState()
     }
 
+    private fun initVisualChanges() {
+        val searchView = binding.svTasks
+        val queryHintText = searchView.queryHint
+        val hintColor = ContextCompat.getColor(requireContext(), R.color.gray)
+        val spannableString = SpannableString(queryHintText)
+        val foregroundColorSpan = ForegroundColorSpan(hintColor)
+        spannableString.setSpan(foregroundColorSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        searchView.queryHint = spannableString
+    }
 
 
     private fun initUIState() {
@@ -80,7 +94,7 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
     }
 
     override fun onDeleteTask(task: Task) {
-        Log.i("TAG", "onDeleteTask: TEST")
+        Log.i("TAG", "onDeleteTask: TEST $task")
         viewModel.deleteTask(task)
     }
 

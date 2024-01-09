@@ -8,7 +8,7 @@ data class Task(
     val title: String,
     val description: String,
     val creationDate: Date?,
-    var isIconsVisible: IsIconsVisible = IsIconsVisible.Hidden
+    var isIconsVisible: IsIconsVisible? = IsIconsVisible.Hidden
 ) {
     constructor(
         title: String,
