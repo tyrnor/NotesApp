@@ -49,8 +49,8 @@ class EditTaskFragment : Fragment() {
     private fun initUIState() {
         lifecycleScope.launch {
             viewModel.task.collect{
-                val editableText = Editable.Factory.getInstance().newEditable(it.title)
-                binding.etTitle.text = editableText
+                binding.etTitle.text = editableText(it.title)
+                binding.etDescription.text = editableText(it.description)
             }
         }
     }
@@ -71,8 +71,18 @@ class EditTaskFragment : Fragment() {
 
         })
         binding.tvConfirm.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.task.collect{
+                    it.title = binding.etTitle.text.toString()
+                    it.description = binding.etDescription.text.toString()
+                    viewModel.updateTask(it)
+                }
+            }
             findNavController().popBackStack(R.id.taskListFragment, false)
         }
     }
 
+    private fun editableText(text: String): Editable{
+        return Editable.Factory.getInstance().newEditable(text)
+    }
 }

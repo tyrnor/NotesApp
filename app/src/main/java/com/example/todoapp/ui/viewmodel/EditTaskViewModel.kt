@@ -36,4 +36,9 @@ class EditTaskViewModel @Inject constructor(
             }
         }
     }
+    fun updateTask(task: Task){
+        viewModelScope.launch {
+            updateTaskUseCase(task)
+        }
+    }
 }

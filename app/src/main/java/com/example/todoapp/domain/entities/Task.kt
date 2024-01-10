@@ -5,8 +5,8 @@ import java.util.Date
 
 data class Task(
     val id: Long,
-    val title: String,
-    val description: String,
+    var title: String,
+    var description: String,
     val creationDate: Date?,
     var isIconsVisible: IsIconsVisible? = IsIconsVisible.Hidden
 ) {

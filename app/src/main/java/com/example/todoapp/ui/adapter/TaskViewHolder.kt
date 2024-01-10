@@ -47,7 +47,7 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
             }
         }
         binding.textViewTitle.text = task.title
-        binding.textViewDescription.text = task.description
+        binding.textViewDescription.text = task.description.ifBlank { "No more text" }
 
         binding.ivDelete.setOnClickListener {
             taskActions?.onDeleteTask(task)
