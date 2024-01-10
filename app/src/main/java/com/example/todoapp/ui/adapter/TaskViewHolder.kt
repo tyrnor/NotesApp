@@ -74,19 +74,6 @@ class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHo
                     }
                 }
             }
-//            override fun onClick(v: View) {
-//                if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
-//                    Log.i("TEST", "onClick: TEST")
-//                    taskItemClickListener?.onItemClick(task)
-//                }
-//                if (isExpanded) {
-//                    binding.buttons.apply {
-//                        startAnimation(disappearAnimation)
-//                        updateIconVisibility?.updateIconVisibility(task, Hidden)
-//                        visibility = View.GONE
-//                    }
-//                }
-//            }
         })
         binding.texts.setOnClickListener {
             if (task.isIconsVisible == Hidden || task.isIconsVisible == PrevIcon){
