@@ -23,3 +23,8 @@ enum class IsIconsVisible {
     Visible,
     PrevIcon
 }
+
+enum class AnimationState {
+    OnCourse,
+    Ended
+}

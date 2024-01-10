@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.databinding.FragmentTaskListBinding
 import com.example.todoapp.domain.entities.IsIconsVisible
 import com.example.todoapp.domain.entities.Task
@@ -71,6 +73,13 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
         binding.rvTasks.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = taskAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged( recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (recyclerView.computeVerticalScrollRange() < recyclerView.height)
+                        recyclerView.stopScroll()
+                }
+            })
         }
     }
 
