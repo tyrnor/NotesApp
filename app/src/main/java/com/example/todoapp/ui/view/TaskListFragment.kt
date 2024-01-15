@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,6 +30,7 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskAdapter: TaskAdapter
+    private lateinit var tasks: List<Task>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,10 +49,43 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
     private fun initUI() {
         initRecyclerView()
         initUIState()
+        initListeners()
     }
+    private fun initListeners(){
+        binding.svTasks.setOnQueryTextListener( object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filter(newText!!)
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+        })
+    }
+
+    private fun filter(text: String) {
+        val filteredList: MutableList<Task> = mutableListOf()
+
+        for (item in tasks ){
+            if (item.title.lowercase().contains(text.lowercase())){
+                filteredList.add(item)
+            }
+        }
+        if (filteredList.isEmpty()){
+            binding.tvEmptyList.visibility = View.VISIBLE
+            binding.rvTasks.visibility = View.GONE
+        } else {
+            binding.tvEmptyList.visibility = View.GONE
+            binding.rvTasks.visibility = View.VISIBLE
+            taskAdapter.submitList(filteredList)
+        }
+    }
+
     private fun initUIState() {
         lifecycleScope.launch {
-            viewModel.tasks.collect { tasks ->
+            viewModel.tasks.collect {
+                this@TaskListFragment.tasks = it
                 viewModel.setAllTaskHidden()
                 if (tasks.isEmpty()) {
                     binding.tvEmptyList.visibility = View.VISIBLE
@@ -81,6 +117,7 @@ class TaskListFragment : Fragment(), TaskAdapter.TaskActions, TaskAdapter.Update
                 }
             })
         }
+
     }
 
     override fun onDeleteTask(task: Task) {
