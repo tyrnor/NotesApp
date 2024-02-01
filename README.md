@@ -25,6 +25,9 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 [![Image from Gyazo](https://i.gyazo.com/1b802eab57ea4860aa01363dc2bc1a2c.gif)](https://gyazo.com/1b802eab57ea4860aa01363dc2bc1a2c)  
 
 - Search Functionality: Search for specific tasks by titles or descriptions.
+
+[![Image from Gyazo](https://i.gyazo.com/80f95d91313b8e287dfc570d99317b08.gif)](https://gyazo.com/80f95d91313b8e287dfc570d99317b08)
+  
 - Intuitive UI: Enjoy an intuitive and visually appealing user interface for a seamless experience.
 
 ### Libraries Used
