@@ -3,7 +3,7 @@
 This is a modern task management application built using the latest Android development technologies.
 This README serves as a showcase of the app, highlighting its architecture, key features, and the libraries used.
 
-![App Screenshot](images/overview_1.png)
+
 
 ## Architecture
 The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating the user interface (View) from the underlying data (Model) and business logic (ViewModel). Also follows the Clean Code Architecture pattern, which divides the codebase into three layers: Data, Domain, and UI. 
