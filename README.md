@@ -21,6 +21,9 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 ### User Experience
 
 - Swipe Actions: Swipe left or right to reveal action buttons for quick task management.
+
+<iframe width="560" height="315" src="https://youtube.com/shorts/KGAsQDn79Nc" frameborder="0" allowfullscreen></iframe>
+  
 - Search Functionality: Search for specific tasks by titles or descriptions.
 - Intuitive UI: Enjoy an intuitive and visually appealing user interface for a seamless experience.
 
