@@ -1,9 +1,10 @@
 # Android To-Do App
 ## Overview
-This is a modern task management application built using the latest Android development technologies.
+This is a simple modern task management application built using the latest Android development technologies and XML layouts.
+This app is made to learn and practice, it is not completely finished and some aspects can be improved.
 This README serves as a showcase of the app, highlighting its architecture, key features, and the libraries used.
 
-![App Screenshot](images/overview_1.jpg)               ![App Screenshot](images/overview_2.jpg)
+![App Screenshot](images/overview_1.jpg) ![App Screenshot](images/overview_2.jpg)
 
 ## Architecture
 The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating the user interface (View) from the underlying data (Model) and business logic (ViewModel). Also follows the Clean Code Architecture pattern, which divides the codebase into three layers: Data, Domain, and UI. 
@@ -12,10 +13,10 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 
 ### Task Management
 
-- Task List: View a list of tasks, including titles and due dates.
-- Task Details: Access detailed task information, including descriptions and creation 
-- Add New Tasks: Easily add tasks with titles, descriptions, and due dates.
-- Edit Tasks: Modify tasks by updating titles, descriptions, and due dates.
+- Task List: View a list of tasks, including titles and brief description.
+- Task Details: Access detailed task information.
+- Add New Tasks: Easily add tasks with titles and descriptions.
+- Edit Tasks: Modify tasks by updating titles and descriptions.
 - Delete Tasks: Remove tasks for a clean and organized task list.
 
 ### User Experience
@@ -28,7 +29,7 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 
 [![Image from Gyazo](https://i.gyazo.com/80f95d91313b8e287dfc570d99317b08.gif)](https://gyazo.com/80f95d91313b8e287dfc570d99317b08)
   
-- Intuitive UI: Enjoy an intuitive and visually appealing user interface for a seamless experience.
+- Intuitive UI: Intuitive and visually appealing user interface for a seamless experience.
 
 ### Libraries Used
 - Android Architecture Components: Utilized ViewModel and Room for robust app architecture.
@@ -36,6 +37,12 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 - Kotlin Coroutines: Facilitated asynchronous programming and background tasks.
 - Navigation Component: Simplified navigation and improved user flow.
 - Material Design: Followed Material Design guidelines for a modern and visually appealing UI.
+
+## Possible improvements
+- Mark task as completed feature.
+- Functional task archive button, right now only the delete button works from the Swipe Actions.
+- Tags for tasks and to organize them by tags
+- And many more features
 
 ## License
 
