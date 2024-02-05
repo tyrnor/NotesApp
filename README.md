@@ -21,7 +21,7 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 
 ### User Experience
 
-- Swipe Actions: Swipe left or right to reveal action buttons for quick task management.
+- Swipe Actions: Swipe left to reveal action buttons for quick task management. You can touch or swipe right to hide action buttons.
   
 [![Image from Gyazo](https://i.gyazo.com/1b802eab57ea4860aa01363dc2bc1a2c.gif)](https://gyazo.com/1b802eab57ea4860aa01363dc2bc1a2c)  
 
