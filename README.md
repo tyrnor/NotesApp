@@ -45,7 +45,7 @@ The app follows the Model-View-ViewModel (MVVM) architecture pattern, separating
 - And many more features
 
 ## License
-
+```xml
 MIT License
 
 Copyright (c) 2024 Carlos Yáñez
@@ -67,4 +67,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
 
